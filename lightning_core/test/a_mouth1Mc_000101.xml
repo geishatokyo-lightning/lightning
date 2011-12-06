@@ -1,0 +1,79 @@
+<swf version="4" compressed="0">
+  <Header framerate="12" frames="1">
+    <size>
+      <Rectangle left="0" right="4800" top="0" bottom="6000"/>
+    </size>
+    <tags>
+      <SetBackgroundColor>
+        <color>
+          <Color red="255" green="255" blue="255"/>
+        </color>
+      </SetBackgroundColor>
+      
+      <DefineShape objectID="1">
+        <bounds>
+          <Rectangle left="0" right="535" top="0" bottom="182"/>
+        </bounds>
+        <styles>
+          <StyleList>
+            <fillStyles>
+              <Solid>
+                <color>
+                  <Color red="109" green="56" blue="20"/>
+                </color>
+              </Solid>
+            </fillStyles>
+            <lineStyles/>
+          </StyleList>
+        </styles>
+        <shapes>
+          <Shape>
+            <edges>
+              <ShapeSetup x="416" y="128" fillStyle1="1"/>
+              <CurveTo x1="-91" y1="37" x2="-110" y2="17"/>
+              <CurveTo x1="-51" y1="2" x2="-78" y2="-22"/>
+              <LineTo x="-86" y="-26"/>
+              <LineTo x="62" y="-11"/>
+              <LineTo x="107" y="-14"/>
+              <CurveTo x1="120" y1="-8" x2="129" y2="-86"/>
+              <CurveTo x1="39" y1="-25" x2="30" y2="11"/>
+              <CurveTo x1="29" y1="10" x2="8" y2="10"/>
+              <CurveTo x1="21" y1="25" x2="-20" y2="30"/>
+              <CurveTo x1="-18" y1="13" x2="-91" y2="37"/>
+              <ShapeSetup/>
+            </edges>
+          </Shape>
+        </shapes>
+      </DefineShape>
+      <DefineSprite objectID="2" frames="1">
+        <tags>
+          <PlaceObject2 replace="0" depth="1" objectID="1">
+            <transform>
+              <Transform transX="0" transY="0"/>
+            </transform>
+          </PlaceObject2>
+          <ShowFrame/>
+          <End/>
+        </tags>
+      </DefineSprite>
+      <DefineSprite objectID="3">
+        <tags>
+          <PlaceObject2 replace="0" depth="1" objectID="2" name="a_partColorMc">
+        <transform>
+          <Transform transX="2152" transY="3400"/>
+        </transform>
+      </PlaceObject2>
+      <ShowFrame/>
+          <End/>
+        </tags>
+      </DefineSprite>
+      <PlaceObject2 replace="0" depth="1" objectID="3" name="avatarPartMc">
+        <transform>
+          <Transform transX="0" transY="0"/>
+        </transform>
+      </PlaceObject2>
+      <ShowFrame/>
+      <End/>
+    </tags>
+  </Header>
+</swf>
