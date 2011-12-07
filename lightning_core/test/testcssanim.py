@@ -268,7 +268,6 @@ class TestAnimationManager(unittest.TestCase):
 
     def test_write_div(self):
         div = self.manager.write_div(self.structure_tree)
-        print div
         self.assertEqual(div,'''<structure>
   <div class="-obj16-33" id="hoge">
     <div class="-obj15-1" style="display:none;">
@@ -323,8 +322,6 @@ position: absolute;
 left: 0px;
 }
 '''
-        print css
-        print expected
         self.assertEqual(css, expected)
 
     def test__make_keyframes(self):

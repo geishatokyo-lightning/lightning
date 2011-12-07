@@ -547,7 +547,6 @@ class Parser(object):
 
             transformVal = "matrix(%.2f %.2f %.2f %.2f %.4f %.4f)" % tree.get_matrix()
 
-            #TODO: associate with depth...
             if tree.clipDepth is not None:
                 part.set("style", "display:none")
             else:
@@ -729,7 +728,6 @@ class Parser(object):
         return animation_set_element
 
     def _str_animation(self, all_symbols, v):
-        # logging.debug('start animation')
         animations = {}
         for key in all_symbols:
             animation = Animation()

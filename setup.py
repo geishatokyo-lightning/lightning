@@ -9,7 +9,7 @@ setup(
     name='lightning_core',
     version='0.5.0',
     description='swf to svg parser',
-    author='Takashi Aoki',
+    author='Takashi Aoki, Masahiro Yamauchi, Ryoko Kato',
     author_email='info@geishatokyo.com',
     url='http://www.geishatokyo.com/',
     install_requires=[

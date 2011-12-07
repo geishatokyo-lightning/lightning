@@ -62,7 +62,6 @@ class LightningSvg(object):
         div   = manager.write_div(structure_tree)
         anims = ','.join(anim_table.keys())
         html = self.make_html(div, css, anims)
-        # html  = self.make_html(css, div, anims)
 
         if has_anim_name:
             return html, css, div
@@ -78,6 +77,5 @@ if __name__ == '__main__':
     outputfilepath = inputfilepath.replace('.xml', '.html')
     fp = open(inputfilepath, 'r')
     html, css, div = LightningSvg().xml2svg(fp, mcname=None, key_prefix='', scale=1.0)
-    print html
     with open(outputfilepath, 'w') as f:
         f.write(html)

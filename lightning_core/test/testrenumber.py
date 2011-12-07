@@ -103,7 +103,6 @@ class TestRenumber(unittest.TestCase):
         self.renumber.create_table_depth_object()
         frames_depth_object = self.renumber.create_frames_depth_object(7)
         self.assertEqual(len(frames_depth_object), 3)
-        # print frames_depth_object
         self.assert_(1 in frames_depth_object[0])
 
         obj0 = frames_depth_object[0][1]
@@ -135,7 +134,6 @@ class TestRenumber(unittest.TestCase):
             if obj is not None:
                 self.failIf(depth in depth_object and obj != depth_object[depth])
                 depth_object[depth] = obj
-        # print self.renumber
 
 
 if __name__ == '__main__':

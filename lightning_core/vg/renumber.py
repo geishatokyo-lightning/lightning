@@ -118,7 +118,6 @@ class Renumber(object):
         result = []
         depth_obj = {}
         for elem in self.parsed.xpath('/swf/Header/tags/DefineSprite[@objectID="%d"]/tags/*' % sprite_id):
-            # print elem.tag
             if elem.tag == 'ShowFrame':
                 if len(result) > 0:
                     for depth in result[-1].keys():
@@ -207,13 +206,8 @@ class Renumber(object):
             return self.parsed
         for sprite_id in sprite_ids:
             depth_object = self.sprite_depth_obj[sprite_id]
-            # print sprite_id, depth_object
             renumbered_table = self.create_renumbered_table(depth_object)
-            # print renumbered_table
             frames_depth_object = self.create_frames_depth_object(sprite_id)
-            # for i, depth_obj in enumerate(frames_depth_object):
-                # for depth, obj in depth_obj.iteritems():
-                    # print i, depth, obj.objectID, obj.transform
             self.renumber_object(renumbered_table, frames_depth_object, sprite_id)
         return self.parsed
 

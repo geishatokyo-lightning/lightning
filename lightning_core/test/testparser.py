@@ -242,7 +242,6 @@ class TestParser(unittest.TestCase):
     def test_make_svg(self):
         parser = Parser()
         parser.parse_from_str(self.simplexml)
-        print parser.make_svg()
 
     def test_str_shape_as_svg(self):
         parser = Parser()
@@ -447,7 +446,6 @@ class TestParser(unittest.TestCase):
         parser._proc_define_shape(xml)
         shape = parser.shapes['79']
         gtag = Parser.ShapeMaker.make_shape_element(shape, [], 'hoge')
-        print len(gtag.getchildren())
         for i,path in zip(xrange(len(gtag.getchildren())),gtag.getchildren()):
             self.assertEqual(path.get('clip-rule'), 'evenodd')
             if i==0:
