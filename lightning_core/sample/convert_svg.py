@@ -3,7 +3,7 @@
 
 import sys
 
-sys.path.append('..')
+sys.path.append('../..')
 from lightning_core.vg.parser import SvgBuilder
 
 

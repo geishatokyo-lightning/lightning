@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, os
+import sys
 
-sys.path.append('..')
+sys.path.append('../..')
 from lightning_core.vg.parser import SvgBuilder
 
 def main(filepath, outdirname):
