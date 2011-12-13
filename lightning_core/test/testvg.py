@@ -1,6 +1,6 @@
 import unittest
-from lightning.lightning.vg.vg import *
-from lightning.lightning.vg.parser import *
+from lightning_core.vg.vg import *
+from lightning_core.vg.parser import *
 from lxml import etree
 
 class TestLinearGrad(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestLinearGrad(unittest.TestCase):
 class TestTransform(unittest.TestCase):
 
     def setUp(self):
-        filename = './test/xmlsamples.xml'
+        filename = './lightning_core/test/xmlsamples.xml'
         f = open(filename,'r')
         samplexml = f.read()
         self.poxml = etree.XML(samplexml).xpath('.//PLACE_OBJECT2_HAS_COLORTRANS/PlaceObject2')[0]

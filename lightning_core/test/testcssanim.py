@@ -1,5 +1,5 @@
 import unittest
-from lightning.lightning.vg.cssanim import *
+from lightning_core.vg.cssanim import *
 from lxml import etree
 
 class TestSvgShape(unittest.TestCase):

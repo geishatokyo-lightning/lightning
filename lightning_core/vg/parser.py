@@ -178,7 +178,7 @@ class Parser(object):
         for gc in list(gclr):
             position = gc.get('position')
             c = gc.find('color/Color')
-            color = LUtil.get_ctf(c)
+            color = LUtil.get_colortrans(c)
             stop = Stop(color, position)
             stops.append(stop)
 
@@ -855,10 +855,10 @@ class Parser(object):
                     clr = color['s']
                     for colorTransform in ctf:
                         if isinstance(clr, tuple):
-                            clr = PUtil.color_trans(shape.symbol, color['s'], colorTransform)
-                            clr = PUtil.color_trans(parent_key, clr, colorTransform)
+                            clr = PUtil.colortrans(shape.symbol, color['s'], colorTransform)
+                            clr = PUtil.colortrans(parent_key, clr, colorTransform)
                         else: # gradient
-                            opacity = PUtil.colorTrans_only_alpha(parent_key, colorTransform)/256
+                            opacity = PUtil.colortrans_only_alpha(parent_key, colorTransform)/256
                             if opacity > 0.0:
                                 pathElm.set("fill-opacity", str(opacity))
 
@@ -1067,16 +1067,6 @@ class PUtil(object):
         return [float(t)/20 if t is not None else None for t in twips]
 
     @staticmethod
-    def get_values_from_tag(elm, *keys):
-        if len(keys) == 1 :
-            value = elm.get(keys[0])
-            if value is not None:
-                return float(value)
-        else:
-            values = [elm.get(k) for k in keys]
-            return [float(v) if v is not None else None for v in values]
-
-    @staticmethod
     def convert_color_as_tuple(elm):
         alpha = elm.get('alpha')
         if alpha is None :
@@ -1085,7 +1075,7 @@ class PUtil(object):
 
 
     @staticmethod
-    def color_trans(key, rgba, ctf):
+    def colortrans(key, rgba, ctf):
         if len(ctf) == 0:
             return rgba
 
@@ -1097,7 +1087,7 @@ class PUtil(object):
             return c.get_colors()
 
     @staticmethod
-    def colorTrans_only_alpha(key, ctf):
+    def colortrans_only_alpha(key, ctf):
 
         def trans_color(rgba, factor, offset):
             return max(0, min( ( float(rgba * int(factor)) / 256 + int(offset) ), 255 ))
@@ -1106,5 +1096,4 @@ class PUtil(object):
             return trans_color(256, ctf[key][3], ctf[key][7])
 
         return 0.0
-
 

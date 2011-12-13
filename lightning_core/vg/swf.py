@@ -29,8 +29,8 @@ class Place(Transform):
         self.ctf = []
 
         if len(ct) > 0:
-            factors = LUtil.get_ctf(ct[0], 'factor')
-            offsets = LUtil.get_ctf(ct[0], 'offset')
+            factors = LUtil.get_colortrans(ct[0], 'factor')
+            offsets = LUtil.get_colortrans(ct[0], 'offset')
 
             self.ctf = factors + offsets
 

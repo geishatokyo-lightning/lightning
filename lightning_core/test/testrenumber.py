@@ -1,5 +1,5 @@
 import unittest
-from lightning.lightning.vg.renumber import *
+from lightning_core.vg.renumber import *
 from lxml import etree
 
 class TestPlaceObject(unittest.TestCase):

@@ -3,7 +3,6 @@
 
 KEY_SPLITTER = '-'
 class LUtil(object):
-
                     
     @staticmethod
     def get_values(elm, *keys):
@@ -19,9 +18,8 @@ class LUtil(object):
         values = [elm.get(k) for k in keys]
         return [int(v) if v is not None else None for v in values]
 
-
     @staticmethod
-    def get_ctf(color, style=None):
+    def get_colortrans(color, style=None):
         colorSet = ('red','green','blue','alpha')
         if style is not None:
             colorArray = [style + clr.capitalize() for clr in colorSet]

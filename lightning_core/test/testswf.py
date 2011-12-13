@@ -1,6 +1,6 @@
 import unittest
-from lightning.lightning.vg.swf import *
-from lightning.lightning.vg.parser import *
+from lightning_core.vg.swf import *
+from lightning_core.vg.parser import *
 from lxml import etree
 
 

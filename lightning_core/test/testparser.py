@@ -1,11 +1,11 @@
 import unittest
-from lightning.lightning.vg.parser import *
+from lightning_core.vg.parser import *
 from lxml import etree
 import hashlib
 
 class TestSvgBuilder(unittest.TestCase):
     def setUp(self):
-        self.simplexmlfilename = './test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
 
     def test_get_shapes(self):
         simplefile = open(self.simplexmlfilename,'r')
@@ -22,10 +22,10 @@ class TestSvgBuilder(unittest.TestCase):
 class TestParser(unittest.TestCase):
 
     def setUp(self):
-        filename = './test/xmlsamples.xml'
+        filename = './lightning_core/test/xmlsamples.xml'
         f = open(filename,'r')
         self.samplexml = f.read()
-        self.simplexmlfilename = './test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
         simplefile = open(self.simplexmlfilename,'r')
         self.simplexml = simplefile.read()
 
@@ -406,7 +406,7 @@ class TestParser(unittest.TestCase):
 
     def test__proc_define_sprite_2(self):
         parser = Parser()
-        xml = etree.XML(open('test/goods_0777_sprite17.txt').read())
+        xml = etree.XML(open('./lightning_core/test/goods_0777_sprite17.txt').read())
         parser._proc_define_sprite(xml)
         sprite = parser.sprites['17']
         self.assertEqual(len(sprite.frames), 21)
@@ -640,7 +640,7 @@ class TestParser(unittest.TestCase):
 class TestPUtil(unittest.TestCase):
 
     def setUp(self):
-        filename = './test/xmlsamples.xml'
+        filename = './lightning_core/test/xmlsamples.xml'
         f = open(filename,'r')
         self.samplexml = f.read()
 
@@ -649,32 +649,19 @@ class TestPUtil(unittest.TestCase):
         xml = etree.XML(self.samplexml).xpath('.//%s/%s' % (samplename,objectname))[0]
         return xml
 
-    def test_color_trans(self):
+    def test_colortrans(self):
         # normalcolortransform
         rgba = (0, 256, 128, 100)
         ctf = {'hoge' : [100, 100, 2, 2, 200, 100, -100, 256]}
         key = 'hoge'
-        self.assertEqual((200, 200, 0, 256), PUtil.color_trans(key,    rgba, ctf))
-        self.assertEqual((  0, 256, 128, 100), PUtil.color_trans('huga', rgba, ctf)) # key mismatch
+        self.assertEqual((200, 200, 0, 256), PUtil.colortrans(key,    rgba, ctf))
+        self.assertEqual((  0, 256, 128, 100), PUtil.colortrans('huga', rgba, ctf)) # key mismatch
 
-    def test_colorTrans_only_alpha(self):
+    def test_colortrans_only_alpha(self):
         # gradientTransform
         ctf = {'hoge' : [0, 0, 0, 100, 0, 0, 0, 56]}
-        self.assertEqual(156.0, PUtil.colorTrans_only_alpha('hoge', ctf))
-        self.assertEqual(0.0,   PUtil.colorTrans_only_alpha('fuga', ctf)) # key mismatch
-
-    def test__get_values_from_tag(self):
-        pxml = self._get_xml('PLACE_OBJECT2_SIMPLE', 'PlaceObject2')
-        trans = pxml.xpath('./transform/Transform')[0]
-        self.assertEqual(
-            PUtil.get_values_from_tag(trans,'scaleX','hoge','scaleY','transX'),
-            [-0.2713775634765625, None, 0.0, -275])
-        self.assertEqual(PUtil.get_values_from_tag(trans,'transX'), -275)
-        self.assertEqual(PUtil.get_values_from_tag(trans,'hoge'), None)
-        # fillStyles
-        fills = {'fillStyle0':'1', 'lineStyle':2}
-        self.assertEqual(PUtil.get_values_from_tag(fills,'fillStyle0', 'fillStyle1', 'lineStyle'),  [1, None, 2])
-        self.assertEqual(PUtil.get_values_from_tag({},'fillStyle0', 'fillStyle1', 'lineStyle'),  [None, None, None])
+        self.assertEqual(156.0, PUtil.colortrans_only_alpha('hoge', ctf))
+        self.assertEqual(0.0,   PUtil.colortrans_only_alpha('fuga', ctf)) # key mismatch
 
     def test__get_pixel_vals(self):
         self.assertAlmostEqual(PUtil.get_pixel_vals(200), 10)
