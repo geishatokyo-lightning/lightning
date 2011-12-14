@@ -7,14 +7,14 @@ except ImportError:
 
 setup(
     name='lightning_core',
-    version='0.5.0',
+    version='0.5.1',
     description='swf to svg parser',
     author='Takashi Aoki, Masahiro Yamauchi, Ryoko Kato',
     author_email='info@geishatokyo.com',
     url='http://www.geishatokyo.com/',
+    license='MIT',
     install_requires=[
       "lxml==2.3.1",
-      "nose==1.1.2",
       "simplejson==2.2.1",
     ],
     test_suite='nose.collector',
