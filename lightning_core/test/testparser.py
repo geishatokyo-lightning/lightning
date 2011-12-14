@@ -665,10 +665,19 @@ class TestPUtil(unittest.TestCase):
 
     def test__get_pixel_vals(self):
         self.assertAlmostEqual(PUtil.get_pixel_vals(200), 10)
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200,300,400), [10,15,20])
+        vals = PUtil.get_pixel_vals(200,300,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertAlmostEqual(vals[1], 15)
+        self.assertAlmostEqual(vals[2], 20)
         self.assertAlmostEqual(len(PUtil.get_pixel_vals(200,None, 400)), 3)
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200, 0, 400), [10, 0,20])
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200,None, 400), [10,None,20])
+        vals = PUtil.get_pixel_vals(200,0,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertAlmostEqual(vals[1], 0)
+        self.assertAlmostEqual(vals[2], 20)
+        vals = PUtil.get_pixel_vals(200,None,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertEqual(vals[1], None)
+        self.assertAlmostEqual(vals[2], 20)
 
     def test__convert_color_as_tuple(self):
         elm1 = {'red':100, 'green':0, 'blue':256}

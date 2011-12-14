@@ -186,7 +186,7 @@ class TestAnimationManager(unittest.TestCase):
             self.assertAlmostEqual(frame.wy, wy)
             self.assertAlmostEqual(frame.tx, tx)
             self.assertAlmostEqual(frame.ty, ty)
-            self.assertAlmostEqual(frame.ctf, ctf)
+            self.assertEqual(frame.ctf, ctf)
             self.assertAlmostEqual(frame.visible, visible)
 
         self.assertEqual(len(self.anim_table), 1)
@@ -210,7 +210,7 @@ class TestAnimationManager(unittest.TestCase):
             self.assertAlmostEqual(frame.wy, wy)
             self.assertAlmostEqual(frame.tx, tx)
             self.assertAlmostEqual(frame.ty, ty)
-            self.assertAlmostEqual(frame.ctf, ctf)
+            self.assertEqual(frame.ctf, ctf)
             self.assertEqual(frame.depth, depth)
             self.assertAlmostEqual(frame.visible, visible)
 
