@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from __future__ import with_statement
 import sys
 from lxml import etree
 
 sys.path.append('..')
 from lightning_svg import LightningSvg
+
+class LightningElement(object):
+  def __init__(self, html, css, div, anims):
+    self.html = html
+    self.css = css
+    self.div = div
+    self.anims = anims
 
 def composite(baseElm, newdiv):
   for elm in baseElm.iterfind('.//div'):
@@ -13,27 +20,21 @@ def composite(baseElm, newdiv):
       elm.getparent().replace(elm, etree.fromstring(newdiv))
   return baseElm
 
+def get_lightning_element(filepath, mcname, key_prefix):
+  with open(filepath, 'r') as f:
+    return LightningElement(*(LightningSvg().xml2svg(f, mcname=mcname, key_prefix=key_prefix, has_anim_name=False, scale=1.0)))
+
+def composite_html(base, part, output_path):
+  comp_div = composite(etree.fromstring(base.div), part.div)
+  html = LightningSvg().make_html(etree.tostring(comp_div), base.css+part.css, part.anims)
+  with open(output_path, 'w') as f:
+    f.write(html)
+
 if __name__ == '__main__':
+  base_element = get_lightning_element('samplexml_base.xml', mcname=None, key_prefix='base')
+  myobj1_element = get_lightning_element('samplexml_myobj1.xml', mcname='body', key_prefix='myobj1')
+  myobj2_element = get_lightning_element('samplexml_myobj2.xml', mcname='body', key_prefix='myobj2')
 
-  basefile      = open('samplexml_base.xml', 'r')
-  myobjectfile1 = open('samplexml_myobj1.xml', 'r')
-  myobjectfile2 = open('samplexml_myobj2.xml', 'r')
+  composite_html(base_element, myobj1_element, 'merged1.html')
+  composite_html(base_element, myobj2_element, 'merged2.html')
 
-  basehtml, basecss, basediv ,baseanims = LightningSvg().xml2svg(basefile,      mcname=None,   key_prefix='base' , has_anim_name=False, scale=1.0)
-  myhtml1,  mycss1,  mydiv1,  myanims1  = LightningSvg().xml2svg(myobjectfile1, mcname="body", key_prefix='myobj', has_anim_name=False, scale=1.0)
-  myhtml2,  mycss2,  mydiv2,  myanims2  = LightningSvg().xml2svg(myobjectfile2, mcname="body", key_prefix='myobj', has_anim_name=False, scale=1.0)
-
-  basefile.close()
-  myobjectfile1.close()
-  myobjectfile2.close()
-
-  newdiv1 = composite(etree.fromstring(basediv), mydiv1)
-  newdiv2 = composite(etree.fromstring(basediv), mydiv2)
-
-  html1 = LightningSvg().make_html(etree.tostring(newdiv1), basecss+mycss1, myanims1)
-  html2 = LightningSvg().make_html(etree.tostring(newdiv2), basecss+mycss2, myanims2)
-
-  with open('merged1.html', 'w') as f:
-    f.write(html1)
-  with open('merged2.html', 'w') as f:
-    f.write(html2)
