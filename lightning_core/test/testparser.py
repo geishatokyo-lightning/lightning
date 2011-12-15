@@ -27,7 +27,7 @@ import hashlib
 
 class TestSvgBuilder(unittest.TestCase):
     def setUp(self):
-        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/testfiles/a_mouth1Mc_000101.xml'
 
     def test_get_shapes(self):
         simplefile = open(self.simplexmlfilename,'r')
@@ -47,7 +47,7 @@ class TestParser(unittest.TestCase):
         filename = './lightning_core/test/xmlsamples.xml'
         f = open(filename,'r')
         self.samplexml = f.read()
-        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/testfiles/a_mouth1Mc_000101.xml'
         simplefile = open(self.simplexmlfilename,'r')
         self.simplexml = simplefile.read()
 
@@ -428,7 +428,7 @@ class TestParser(unittest.TestCase):
 
     def test__proc_define_sprite_2(self):
         parser = Parser()
-        xml = etree.XML(open('./lightning_core/test/goods_0777_sprite17.txt').read())
+        xml = etree.XML(open('./lightning_core/test/testfiles/goods_0777_sprite17.txt').read())
         parser._proc_define_sprite(xml)
         sprite = parser.sprites['17']
         self.assertEqual(len(sprite.frames), 21)
