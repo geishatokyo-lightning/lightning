@@ -201,11 +201,6 @@ class Animation(object):
         self.frames = []
 
     def appendFrame(self, index, sx, sy, wx, wy, tx, ty, ctf, visible=True):
-        # self.frames.append({'index': index,
-                            # 'sx': sx, 'sy': sy,
-                            # 'wx': wx, 'wy': wy,
-                            # 'tx': tx, 'ty': ty,
-                            # 'ctf': ctf})
         frame = AnimFrame()
         frame.set_items({'index': index,
                             'sx': sx, 'sy': sy,
