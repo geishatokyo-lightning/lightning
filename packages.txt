@@ -1,4 +1,0 @@
-lxml==2.3.1
-nose==1.1.2
-pip==1.0.2
-simplejson==2.2.1

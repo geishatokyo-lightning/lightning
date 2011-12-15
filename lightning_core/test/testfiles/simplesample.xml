@@ -58,7 +58,7 @@
       </DefineSprite>
       <DefineSprite objectID="3">
         <tags>
-          <PlaceObject2 replace="0" depth="1" objectID="2" name="a_partColorMc">
+          <PlaceObject2 replace="0" depth="1" objectID="2" name="color">
         <transform>
           <Transform transX="2152" transY="3400"/>
         </transform>
@@ -67,7 +67,7 @@
           <End/>
         </tags>
       </DefineSprite>
-      <PlaceObject2 replace="0" depth="1" objectID="3" name="avatarPartMc">
+      <PlaceObject2 replace="0" depth="1" objectID="3" name="hoge">
         <transform>
           <Transform transX="0" transY="0"/>
         </transform>

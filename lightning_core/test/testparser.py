@@ -1,3 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# 
+# Copyright (c) 2011 Geisha Tokyo Entertainment, Inc.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of 
+# this software and associated documentation files (the "Software"), to deal in 
+# the Software without restriction, including without limitation the rights to 
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of 
+# the Software, and to permit persons to whom the Software is furnished to do so, 
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all 
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS 
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN 
+# AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import unittest
 from lightning_core.vg.parser import *
 from lxml import etree
@@ -5,7 +27,7 @@ import hashlib
 
 class TestSvgBuilder(unittest.TestCase):
     def setUp(self):
-        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/testfiles/simplesample.xml'
 
     def test_get_shapes(self):
         simplefile = open(self.simplexmlfilename,'r')
@@ -25,7 +47,7 @@ class TestParser(unittest.TestCase):
         filename = './lightning_core/test/xmlsamples.xml'
         f = open(filename,'r')
         self.samplexml = f.read()
-        self.simplexmlfilename = './lightning_core/test/a_mouth1Mc_000101.xml'
+        self.simplexmlfilename = './lightning_core/test/testfiles/simplesample.xml'
         simplefile = open(self.simplexmlfilename,'r')
         self.simplexml = simplefile.read()
 
@@ -406,7 +428,7 @@ class TestParser(unittest.TestCase):
 
     def test__proc_define_sprite_2(self):
         parser = Parser()
-        xml = etree.XML(open('./lightning_core/test/goods_0777_sprite17.txt').read())
+        xml = etree.XML(open('./lightning_core/test/testfiles/animationsample.txt').read())
         parser._proc_define_sprite(xml)
         sprite = parser.sprites['17']
         self.assertEqual(len(sprite.frames), 21)
@@ -665,10 +687,19 @@ class TestPUtil(unittest.TestCase):
 
     def test__get_pixel_vals(self):
         self.assertAlmostEqual(PUtil.get_pixel_vals(200), 10)
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200,300,400), [10,15,20])
+        vals = PUtil.get_pixel_vals(200,300,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertAlmostEqual(vals[1], 15)
+        self.assertAlmostEqual(vals[2], 20)
         self.assertAlmostEqual(len(PUtil.get_pixel_vals(200,None, 400)), 3)
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200, 0, 400), [10, 0,20])
-        self.assertAlmostEqual(PUtil.get_pixel_vals(200,None, 400), [10,None,20])
+        vals = PUtil.get_pixel_vals(200,0,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertAlmostEqual(vals[1], 0)
+        self.assertAlmostEqual(vals[2], 20)
+        vals = PUtil.get_pixel_vals(200,None,400)
+        self.assertAlmostEqual(vals[0], 10)
+        self.assertEqual(vals[1], None)
+        self.assertAlmostEqual(vals[2], 20)
 
     def test__convert_color_as_tuple(self):
         elm1 = {'red':100, 'green':0, 'blue':256}
