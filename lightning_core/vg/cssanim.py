@@ -162,7 +162,7 @@ class AnimationManager(object):
     def get_animation(self, root):
         anim_table = {}
         for anim in root.xpath('//animation'):
-            key = anim.attrib['key']
+            key = anim.attrib['key'][:-2]
             frames = anim.findall('frame')
             anim_table[key] = [SvgTransform(frame.attrib) for frame in frames]
         return anim_table
@@ -214,7 +214,7 @@ class AnimationManager(object):
                 if len(ctf) > 1:
                     ctfsArray.append({key:ctf})
 
-                key_depth = LUtil.make_key_string(key, prefix=key_prefix, suffix=depth)
+                key_depth = LUtil.make_key_string(objId, prefix=key_prefix, suffix=depth)
 
                 structure_table[key_depth] = SvgTransform(elem.attrib)
 

@@ -31,6 +31,38 @@ class SvgBuilder(object):
     def get_shapes_as_dict(self):
         return self.parser.shapes
 
+    def _make_shape(self, tree, shape):
+        shapes = []
+
+        if LUtil.objectID_from_key(tree.key) == shape.symbol:
+            s = etree.Element("shape")
+
+            s.set("key", tree.key)
+            s.set("name", shape.name)
+            s.set("x", str(shape.left))
+            s.set("y", str(shape.top))
+            s.set("width", str(shape.width))
+            s.set("height", str(shape.height))
+            
+            shapes.append(s)
+
+        for c in tree.children:
+            c_shapes = self._make_shape(c, shape)
+
+            shapes.extend(c_shapes)
+
+        return shapes
+
+    def get_shapes_as_xml(self):
+        shapelist = etree.Element("shapelist")
+
+        for k, v in self.parser.shapes.iteritems():
+            shapes = self._make_shape(self.parser.tree, v)
+
+            shapelist.extend(shapes)
+            
+        return shapelist
+    
     def get_shapes(self):
         buf = ""
         buf += "%d\n" % len(self.parser.shapes)
@@ -68,7 +100,8 @@ class SvgBuilder(object):
     def _save_svgs(self, outdirname):
         # save shapes as svg files
         for k, v in self.parser.shapes.iteritems():
-            svg_path = os.path.join(outdirname, "obj%s_%s.svg" % (k, v.name))
+            #svg_path = os.path.join(outdirname, "obj%s_%s.svg" % (k, v.name))
+            svg_path = os.path.join(outdirname, "%s.svg" % v.name)
             Parser.save_shape_as_svg(v, [], svg_path)
             logging.debug("Converted to %s" % svg_path)
 
@@ -85,11 +118,10 @@ class SvgBuilder(object):
         fp.write(svgstr)
         fp.close()
 
-
     def _save_shapes(self, outdirname):
-        shapes_path = os.path.join(outdirname, "shapes")
+        shapes_path = os.path.join(outdirname, "shapes.xml")
         fp = open(shapes_path, "w")
-        fp.write(self.get_shapes())
+        fp.write(etree.tostring(self.get_shapes_as_xml(), pretty_print=True))
         fp.close()
         logging.debug("Converted to %s" % shapes_path)
 
@@ -617,31 +649,43 @@ class Parser(object):
 
     def _build_tree(self, scale_factor=1.0):
 
+        stack = []
+        
         # build tree structure
         root = Tree()
         root.key = "root"
         root.sx = 1.0 / scale_factor
         root.sy = 1.0 / scale_factor
-        stack = []
-
+        
         for k, v in self.places.iteritems():
             tree = Tree()
             tree.set_items(v.items())
-            tree.key = "obj" + k
+            tree.key = "-obj" + k + "-1-1"
             tree.parent = root
             root.children.append(tree)
             stack.append(tree)
 
+        key_count = {}
+        
         while len(stack) > 0:
             current = stack.pop()
-            currentSprite = self._search_sprite(current.key)
+            currentSprite = self._search_sprite(LUtil.objectID_from_key(current.key))
+            #currentSprite = self._search_sprite(current.key)
             if currentSprite is not None:
                 f = currentSprite.frames[0]
                 for p in f.places:
                     for s in p['symbols']:
+
+                        if s in key_count.keys():
+                            key_count[s] = key_count[s] + 1
+                        else:
+                            key_count[s] = 1
+                            
                         tree = Tree()
                         tree.set_items(p.items())
-                        tree.key = LUtil.objectID_from_key(s)
+                        tree.key = s + "-" + str(key_count[s])
+
+                        #tree.key = LUtil.objectID_from_key(s)
                         tree.parent = current
                         current.children.append(tree)
                         stack.append(tree)
@@ -675,6 +719,23 @@ class Parser(object):
     def _set_vals(self, e, **keyvalue):
         [e.set(k, str(v)) for k,v in keyvalue.iteritems() if v is not None]
 
+    def _make_keys_from_tree(self, tree):
+
+        keys = []
+
+        if tree.key not in keys:
+            keys.append(tree.key)
+
+
+        for c in tree.children:
+            c_keys = self._make_keys_from_tree(c)
+
+            for k in c_keys:
+                if k not in keys:
+                    keys.append(k)
+
+        return keys
+        
     def str_animation(self):
         # build animation
         animations = {}
@@ -702,10 +763,22 @@ class Parser(object):
 
         animation_sequence_element.set("index", "1")
 
+        tree_keys = self._make_keys_from_tree(self.tree)
+        
         for key, animation in animations.iteritems():
 
             animation_element = etree.Element("animation")
-            animation_element.set("key", key)
+
+            animation_key = key
+            
+            elms = key.split('-')
+
+            for k in tree_keys:
+                if k[:-2] == key:
+                    animation_key = k
+                    break
+
+            animation_element.set("key", animation_key)
 
             for f in animation.frames:
                 frame_element = etree.Element("frame")
