@@ -21,6 +21,7 @@
 # AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+from __future__ import with_statement
 import sys
 import os
 import os.path
@@ -73,8 +74,11 @@ class SvgBuilder(object):
         return structure
 
     #----save-----
-    def save_as_static_svg(self, outdirname):
-        self._save_svg(outdirname)
+    def save_as_static_svg(self, output_path):
+        # self._save_svg(outdirname)
+        name, svgstr = self.parser.make_svg()
+        with open(output_path, 'w') as fp:
+            fp.write(svgstr)
 
     def save(self, outdirname):
 
@@ -102,30 +106,26 @@ class SvgBuilder(object):
 
         filepath = os.path.join(outdirname, name + ".svg")
 
-        fp = open(filepath, "w")
-        fp.write(svgstr)
-        fp.close()
+        with open(filepath, "w") as fp:
+            fp.write(svgstr)
 
 
     def _save_shapes(self, outdirname):
         shapes_path = os.path.join(outdirname, "shapes")
-        fp = open(shapes_path, "w")
-        fp.write(self.get_shapes())
-        fp.close()
+        with open(shapes_path, "w") as fp:
+            fp.write(self.get_shapes())
         logging.debug("Converted to %s" % shapes_path)
 
     def _save_structure(self, outdirname):
         structure_path = os.path.join(outdirname, "structure.xml")
-        fp = open(structure_path, "w")
-        fp.write(etree.tostring(self.get_structure(), pretty_print=True))
-        fp.close()
+        with open(structure_path, "w") as fp:
+            fp.write(etree.tostring(self.get_structure(), pretty_print=True))
         logging.debug("Converted to " + structure_path)
 
     def _save_animation(self, outdirname):
         animations_path = os.path.join(outdirname, "animation.xml")
-        fp = open(animations_path, "w")
-        fp.write(etree.tostring(self.get_animation(), pretty_print=True))
-        fp.close()
+        with open(animations_path, "w") as fp:
+            fp.write(etree.tostring(self.get_animation(), pretty_print=True))
         logging.debug("Converted to " + animations_path)
 
 class Parser(object):
