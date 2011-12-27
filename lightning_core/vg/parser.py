@@ -1175,8 +1175,10 @@ class PUtil(object):
             return rgba
 
         c = Color(rgba[:4])
-        if len(ctf.keys()) > 0 and key in ctf.keys()[0]:
-            colorTransform = ColorTransform(ctf.values()[0])
+        if ctf.has_key(key):
+            colorTransform = ColorTransform(ctf[key])
+#       if len(ctf.keys()) > 0 and key in ctf.keys()[0]:
+#           colorTransform = ColorTransform(ctf.values()[0])
             return c.transform(colorTransform).get_colors()
         else:
             return c.get_colors()
