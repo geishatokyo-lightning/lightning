@@ -182,8 +182,7 @@ class AnimationManager(object):
     def get_animation(self, root):
         anim_table = {}
         for anim in root.xpath('//animation'):
-            # key = anim.attrib['key'][:-2]
-            key = anim.attrib['key']
+            key = anim.attrib['key'][:-2]
             frames = anim.findall('frame')
             anim_table[key] = [SvgTransform(frame.attrib) for frame in frames]
         return anim_table

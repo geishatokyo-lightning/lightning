@@ -159,7 +159,7 @@ class TestAnimationManager(unittest.TestCase):
         anim_seq = etree.Element('animation_sequence')
         anim_seq.set('index', '1')
         anim = etree.Element('animation')
-        anim.set('key', '-obj16-33')
+        anim.set('key', '-obj16-33-1')
         frame0  = make_frame(0 , 1.0,1.0, 356.0,-44.0, 0.0,0.0, False, [])
         frame1  = make_frame(1 , 1.0,1.0, 356.0,-44.0, 0.0,0.0, False, [])
         frame14 = make_frame(14, 1.10000610352,1.19999694824, 329.0,-77.0, 0.0,0.0, True, [0,1,10,256,100,300,256,0])
