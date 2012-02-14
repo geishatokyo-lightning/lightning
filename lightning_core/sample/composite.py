@@ -51,9 +51,9 @@ def composite_html(base, part, output_path):
         f.write(html)
 
 if __name__ == '__main__':
-    base_element = get_lightning_element('samplexml_base.xml', mcname=None, key_prefix='base')
-    myobj1_element = get_lightning_element('samplexml_myobj1.xml', mcname='body', key_prefix='myobj1')
-    myobj2_element = get_lightning_element('samplexml_myobj2.xml', mcname='body', key_prefix='myobj2')
+    base_element = get_lightning_element('sample_base.xml', mcname=None, key_prefix='base')
+    myobj1_element = get_lightning_element('sample1.xml', mcname='body', key_prefix='myobj1')
+    myobj2_element = get_lightning_element('sample2.xml', mcname='body', key_prefix='myobj2')
 
     composite_html(base_element, myobj1_element, 'merged1.html')
     composite_html(base_element, myobj2_element, 'merged2.html')
