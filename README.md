@@ -2,7 +2,7 @@
 
 Lightning is a python library that takes Swfmill's XML output and transforms it into SVG with CSS animation.
 
-See also [wiki].
+See also [lightning wiki](https://github.com/geishatokyo-lightning/lightning/wiki).
 
 # License
 
