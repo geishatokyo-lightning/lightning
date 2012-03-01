@@ -35,8 +35,9 @@ setup(
     url='http://www.geishatokyo.com/',
     license='MIT',
     install_requires=[
-      "lxml==2.3.1",
-      "simplejson==2.2.1",
+      "lxml>=2.3.1",
+      "simplejson>=2.2.1",
+      "nose>=1.1.2",
     ],
     test_suite='nose.collector',
     packages=['lightning_core'] + find_packages(exclude=['ez_setup']),
