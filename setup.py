@@ -28,7 +28,7 @@ except ImportError:
 
 setup(
     name='lightning_core',
-    version='0.5.2',
+    version='1.0.0',
     description='swf to svg parser',
     author='Takashi Aoki, Masahiro Yamauchi, Ryoko Kato',
     author_email='info@geishatokyo.com',
