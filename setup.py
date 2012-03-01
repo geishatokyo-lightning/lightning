@@ -37,9 +37,8 @@ setup(
     install_requires=[
       "lxml>=2.3.1",
       "simplejson>=2.2.1",
-      "nose>=1.1.2",
     ],
-    test_suite='nose.collector',
+    test_suite='lightning_core.test',
     packages=['lightning_core'] + find_packages(exclude=['ez_setup']),
     include_package_data=True,
     zip_safe=False,
